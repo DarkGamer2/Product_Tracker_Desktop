@@ -2,16 +2,17 @@ import Navbar from "../components/Navbar";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
+import {items} from "../data/items";
 const Home = () => {
   const [products, setProducts] = useState([]);
-
-  const API_URL = "https://producttracker-api-production.up.railway.app/";
+  const [username,setUsername]=useState("text");
+  const API_URL = "http://localhost:4040/";
 
   type product = {
-    productName: string;
-    productImageURL: string;
+    itemName: string;
+    itemImage: string;
     productDescription: string;
-    productPrice: number;
+    price: number;
     productID: number;
   };
   useEffect(() => {
@@ -27,6 +28,18 @@ const Home = () => {
       .catch((error) => console.log(error.message));
   });
 
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await Axios.get(`${API_URL}/username`);
+        setUsername(response.data.username);
+      } catch (error) {
+        console.error('Failed to fetch username:', error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
   return (
     <section>
       <Navbar />
@@ -34,14 +47,17 @@ const Home = () => {
         <div>
           <h1 className="text-center text-2xl font-bold uppercase">Products</h1>
         </div>
-        {products.map((product: product) => {
+        {items.map((product: product) => {
           return (
-            <Product
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+              <Product
               key={product.productID}
-              productName={product.productName}
+              productImageURL={product.itemImage}
+              productName={product.itemName}
               productDescription={product.productDescription}
-              productPrice={product.productPrice}
+              productPrice={product.price}
             />
+            </div>
           );
         })}
       </section>

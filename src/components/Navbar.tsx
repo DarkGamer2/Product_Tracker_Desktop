@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <section>
       <nav>
         <ul className="flex justify-evenly">
+          <li>Hello {props.username}!</li>
           <li className="text-purple-700">
             <Link to="/">Home</Link>
           </li>
