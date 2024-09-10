@@ -10,12 +10,12 @@ const AddProductForm = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const API_URL = "https://producttracker-api-production.up.railway.app/";
+  const API_URL = "https://product-tracker-api-production.up.railway.app";
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(`${API_URL}api/products/addproduct`, {
+      .post(`${API_URL}/api/products/addProduct`, {
         productName,
         productImage,
         productDescription,
@@ -29,22 +29,22 @@ const AddProductForm = () => {
       })
       .then(() => {
         setLoading(false);
-        navigate("/");
+        navigate("/home");
       });
   };
   return (
     <section>
       <div>
-        <h1 className="text-center text-2xl font-oswald uppercase font-semibold">
+        <h1 className="text-center text-2xl font-oswald uppercase font-semibold text-purple">
           Add Product
         </h1>
       </div>
       <div className="flex flex-col justify-center items-center">
         <form className="">
           <div>
-            <label className="block">Product Name</label>
+            <label className="block font-lato italic">Product Name</label>
             <input
-              className="px-3 py-3 rounded-md"
+              className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
               type="text"
               name="productName"
               placeholder="Name"
@@ -52,9 +52,9 @@ const AddProductForm = () => {
             />
           </div>
           <div>
-            <label className="block">Product Image</label>
+            <label className="block font-lato italic">Product Image</label>
             <input
-              className="px-3 py-3 rounded-md"
+              className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
               type="text"
               name="productImageURL"
               placeholder="Image URL"
@@ -62,9 +62,9 @@ const AddProductForm = () => {
             />
           </div>
           <div>
-            <label className="block">Product Description</label>
+            <label className="block font-lato italic">Product Description</label>
             <input
-              className="px-3 py-3 rounded-md"
+              className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
               type="text"
               name="productDescription"
               placeholder="Product Description"
@@ -72,9 +72,9 @@ const AddProductForm = () => {
             />
           </div>
           <div>
-            <label className="block">Product Price</label>
+            <label className="block font-lato italic">Product Price</label>
             <input
-              className="px-3 py-3 rounded-md"
+              className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
               type="text"
               name="productPrice"
               placeholder="Product Price"
@@ -84,7 +84,7 @@ const AddProductForm = () => {
           <div className="text-center">
             <button
               onClick={handleSubmit}
-              className="bg-purple-500 px-2 py-3 rounded-md text-white mt-3 hover:bg-purple-900"
+              className="bg-purple px-2 py-3 rounded-md text-white mt-3 hover:bg-purple-900 font-bebasNeue uppercase focus:outline-none focus:ring-1 focus:ring-purple"
             >
               {loading ? (
                 <p>

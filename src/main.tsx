@@ -6,6 +6,7 @@ import Home from "./pages/Home.tsx";
 import AddProduct from "./pages/AddProduct.tsx";
 import Settings from "./pages/Settings.tsx";
 import Login from "./pages/Login.tsx"
+import ProductDetails from "./pages/ProductDetails.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const routes = createBrowserRouter([
     path: "/settings",
     element: <Settings />,
   },
+  {
+    path:":productId",
+    element:<ProductDetails/>
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

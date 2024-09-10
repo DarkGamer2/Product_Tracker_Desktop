@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
-const Navbar = (props) => {
+
+interface NavProps{
+  username: string;
+ 
+}
+const Navbar = (props:NavProps) => {
   return (
     <section>
       <nav>
         <ul className="flex justify-evenly">
           <li>Hello {props.username}!</li>
           <li className="text-purple-700">
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li className="text-purple-700">
             <Link to="/addproduct">Add Product</Link>

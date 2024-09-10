@@ -2,11 +2,14 @@ import Navbar from "../components/Navbar";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
-import {items} from "../data/items";
+import { items } from "../data/items";
+import { Link } from "react-router-dom";
+
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [username,setUsername]=useState("text");
-  const API_URL = "http://localhost:4040/";
+  const [username, setUsername] = useState("text");
+  const [loading, setLoading] = useState(false);
+  const API_URL = "https://product-tracker-api-production.up.railway.app/";
 
   type product = {
     itemName: string;
@@ -15,7 +18,9 @@ const Home = () => {
     price: number;
     productID: number;
   };
+
   useEffect(() => {
+    setLoading(true);
     Axios({
       method: "GET",
       url: `${API_URL}api/products`,
@@ -25,8 +30,10 @@ const Home = () => {
       withCredentials: false,
     })
       .then((response) => setProducts(response.data))
-      .catch((error) => console.log(error.message));
-  });
+      .catch((error) => console.log(error.message)).finally(()=>{
+        setLoading(false);
+      })
+  }, []); // Added empty dependency array to run only once
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -40,26 +47,25 @@ const Home = () => {
 
     fetchUsername();
   }, []);
+
   return (
     <section>
-      <Navbar />
+      <Navbar username={username} />
       <section>
         <div>
-          <h1 className="text-center text-2xl font-bold uppercase">Products</h1>
+          <h1 className="text-center text-2xl font-bold uppercase font-bebasNeue text-purple">Products</h1>
         </div>
-        {items.map((product: product) => {
-          return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
-              <Product
-              key={product.productID}
-              productImageURL={product.itemImage}
-              productName={product.itemName}
-              productDescription={product.productDescription}
-              productPrice={product.price}
-            />
-            </div>
-          );
-        })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+          {products.map((product: product) => (
+           <Link to={`/:productId`}> <Product productId={product.productID}
+           key={product.productID}
+           productImageURL={product.itemImage}
+           productName={product.itemName}
+           productDescription={product.productDescription}
+           productPrice={product.price}
+         /></Link>
+          ))}
+        </div>
       </section>
     </section>
   );

@@ -4,8 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        oswald: ["oswald", "system-ui"],
-        bebasNeue:["Bebas Neue", "system-ui"],
+        oswald: ["oswald"],
+        bebasNeue:["Bebas Neue"],
+        lato:["Lato"]
       },
       colors: {
         purple: "#7b00ff",

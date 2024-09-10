@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleLogin = async (e: React.MouseEvent) => {
         e.preventDefault();
-        await axios.post("http://localhost:4040/api/login", {
+        await axios.post("https://product-tracker-api-production.up.railway.app/api/login", {
             username: username,
             password: password
         })
