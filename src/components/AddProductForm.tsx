@@ -6,20 +6,20 @@ const AddProductForm = () => {
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productPrice, setProductPrice] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const API_URL = "https://product-tracker-api-production.up.railway.app";
-  const handleSubmit = (e: React.MouseEvent) => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     setLoading(true);
-    axios
+    await axios
       .post(`${API_URL}/api/products/addProduct`, {
         productName,
-        productImage,
+        productImage: productImage, // Ensure this matches the schema
         productDescription,
-        productPrice,
+        productPrice, // Convert to number
       })
       .then((res) => {
         console.log(res);
@@ -27,7 +27,7 @@ const AddProductForm = () => {
       .catch((err) => {
         console.log(err);
       })
-      .then(() => {
+      .finally(() => { // Use finally instead of then for cleanup
         setLoading(false);
         navigate("/home");
       });
@@ -56,7 +56,7 @@ const AddProductForm = () => {
             <input
               className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
               type="text"
-              name="productImageURL"
+              name="productImage"
               placeholder="Image URL"
               onChange={(e) => setProductImage(e.target.value)}
             />
@@ -75,7 +75,7 @@ const AddProductForm = () => {
             <label className="block font-lato italic">Product Price</label>
             <input
               className="px-3 py-3 rounded-md focus:outline-none focus:ring-1 focus:ring-purple"
-              type="text"
+              type="number"
               name="productPrice"
               placeholder="Product Price"
               onChange={(e) => setProductPrice(e.target.value)}
