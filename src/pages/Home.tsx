@@ -59,7 +59,7 @@ const Home = () => {
           {products.map((product: product) => (
            <Link to={`/:productId`}> <Product productId={product.productID}
            key={product.productID}
-           productImageURL={product.itemImage}
+           productImage={product.itemImage}
            productName={product.itemName}
            productDescription={product.productDescription}
            productPrice={product.price}
