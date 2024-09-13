@@ -12,7 +12,6 @@ const Product = (props: productProps) => {
     <div>
       <img src={props.productImage} width={150} height={200}/>
       <h1>{props.productName}</h1>
-      <p>{props.productDescription}</p>
       <p>Price: ${props.productPrice}</p>
 
       {/* <div className="text-center">

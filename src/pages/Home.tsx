@@ -2,7 +2,6 @@ import Navbar from "../components/Navbar";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
-import { items } from "../data/items";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -30,10 +29,11 @@ const Home = () => {
       withCredentials: false,
     })
       .then((response) => setProducts(response.data))
-      .catch((error) => console.log(error.message)).finally(()=>{
+      .catch((error) => console.log(error.message))
+      .finally(() => {
         setLoading(false);
-      })
-  }, []); // Added empty dependency array to run only once
+      });
+  }, []); // Empty dependency array to run only once
 
   useEffect(() => {
     const fetchUsername = async () => {
@@ -41,7 +41,7 @@ const Home = () => {
         const response = await Axios.get(`${API_URL}/username`);
         setUsername(response.data.username);
       } catch (error) {
-        console.error('Failed to fetch username:', error);
+        console.error("Failed to fetch username:", error);
       }
     };
 
@@ -53,18 +53,27 @@ const Home = () => {
       <Navbar username={username} />
       <section>
         <div>
-          <h1 className="text-center text-2xl font-bold uppercase font-bebasNeue text-purple">Products</h1>
+          <h1 className="text-center text-2xl font-bold uppercase font-bebasNeue text-purple">
+            Products
+          </h1>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
-          {products.map((product: product) => (
-           <Link to={`/:productId`}> <Product productId={product.productID}
-           key={product.productID}
-           productImage={product.itemImage}
-           productName={product.itemName}
-           productDescription={product.productDescription}
-           productPrice={product.price}
-         /></Link>
-          ))}
+          {products.map((product: product) => {
+            return (
+              <Link
+                to={`/${product.productID}`} // Correct URL interpolation
+                key={product.productID}       // Key added to the outermost element (Link)
+              >
+                <Product
+                  productId={product.productID}
+                  productImage={product.itemImage}
+                  productName={product.itemName}
+                  productDescription={product.productDescription}
+                  productPrice={product.price}
+                />
+              </Link>
+            );
+          })}
         </div>
       </section>
     </section>
