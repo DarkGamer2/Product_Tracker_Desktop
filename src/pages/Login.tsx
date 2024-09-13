@@ -7,23 +7,21 @@ const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
 
     const handleLogin = async (e: React.MouseEvent) => {
         e.preventDefault();
-        await axios.post("https://product-tracker-api-production.up.railway.app/api/login", {
-            username: username,
-            password: password
-        })
-        .then((res) => {
-            console.log(res.data);
+        try {
+            const response = await axios.post("https://product-tracker-api-production.up.railway.app/api/login", {
+                username: username,
+                password: password
+            });
+            console.log(response.data);
             navigate("/home");
-        }).catch(
-            (err) => {
-                console.log(err);
-                return <h2 className="text-red">Invalid Credentials</h2>
-                
-            }
-        )
+        } catch (err) {
+            console.error(err);
+            setError("Invalid Credentials");
+        }
     };
 
     return (
@@ -34,15 +32,29 @@ const Login = () => {
             </div>
             <form className="mt-8">
                 <label className="block text-xl text-black">Username:</label>
-                <input type="text" className="rounded-md px-2 py-2 mb-5 text-smokeWhite" onChange={(e) => setUsername(e.target.value)} />
+                <input 
+                    type="text" 
+                    className="rounded-md px-2 py-2 mb-5 text-smokeWhite" 
+                    onChange={(e) => setUsername(e.target.value)} 
+                />
                 <label className="block text-xl text-black">Password:</label>
-                <input type="password" className="rounded-md px-2 py-2 mb-5 text-smokeWhite" onChange={(e) => setPassword(e.target.value)} />
+                <input 
+                    type="password" 
+                    className="rounded-md px-2 py-2 mb-5 text-smokeWhite" 
+                    onChange={(e) => setPassword(e.target.value)} 
+                />
                 <div>
                     <span>Remember Password? <input type="checkbox" /></span>
                 </div>
                 <div className="text-center">
-                    <button className="px-8 py-4 rounded-md mt-4 text-sm tracking-wide bg-purple text-white" onClick={handleLogin}>Login</button>
+                    <button 
+                        className="px-8 py-4 rounded-md mt-4 text-sm tracking-wide bg-purple text-white" 
+                        onClick={handleLogin}
+                    >
+                        Login
+                    </button>
                 </div>
+                {error && <h2 className="text-red mt-4 text-center font-bold">{error}</h2>}
             </form>
         </div>
     );

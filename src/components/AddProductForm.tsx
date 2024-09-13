@@ -17,7 +17,7 @@ const AddProductForm = () => {
     await axios
       .post(`${API_URL}/api/products/addProduct`, {
         productName,
-        productImage: productImage, // Ensure this matches the schema
+        productImage, // Ensure this matches the schema
         productDescription,
         productPrice, // Convert to number
       })
