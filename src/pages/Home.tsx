@@ -3,8 +3,9 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
 import { Link } from "react-router-dom";
-
+import { useTheme } from "@emotion/react";
 const Home = () => {
+  const {theme}=useTheme();
   const [products, setProducts] = useState([]);
   const [username, setUsername] = useState("text");
   const [loading, setLoading] = useState(false);
@@ -49,9 +50,12 @@ const Home = () => {
   }, []);
 
   return (
-    <section>
+    <section className={`${theme==="dark"?"dark":"light"}`}>
+
+  
+    <section className="bg-black">
       <Navbar username={username} />
-      <section>
+      <section className="">
         <div>
           <h1 className="text-center text-2xl font-bold uppercase font-bebasNeue text-purple">Products</h1>
         </div>
@@ -69,6 +73,7 @@ const Home = () => {
           ))}
         </div>
       </section>
+    </section>
     </section>
   );
 };
