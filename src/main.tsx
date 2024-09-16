@@ -7,6 +7,7 @@ import AddProduct from "./pages/AddProduct.tsx";
 import Settings from "./pages/Settings.tsx";
 import Login from "./pages/Login.tsx"
 import ProductDetails from "./pages/ProductDetails.tsx";
+import ThemeContext, { ThemeProvider } from "./context/ThemeContext.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -26,12 +27,16 @@ const routes = createBrowserRouter([
     element: <Settings />,
   },
   {
-    path:":productId",
+    path:"/product/:productId",
     element:<ProductDetails/>
   }
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={routes} />
+ 
+   <React.StrictMode>
+   <ThemeProvider>
+   <RouterProvider router={routes} />
+   </ThemeProvider>
   </React.StrictMode>
+ 
 );
